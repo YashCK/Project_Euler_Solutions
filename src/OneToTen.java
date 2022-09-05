@@ -141,7 +141,11 @@ public class OneToTen {
 
     // Helper Methods
     public boolean isPalindrome(int num) {
-        int length = ("" + num).length();
+        // int length = ("" + num).length();
+        if(num == 0){
+            return true;
+        }
+        int length = (int)(Math.log10(num) + 1);
         int[] digits = new int[length];
         for (int i = 0; i < length; i++) {
             digits[i] = num % 10;
@@ -179,9 +183,8 @@ public class OneToTen {
     public int findGCD(int big, int small) {
         if (big % small == 0) {
             return small;
-        } else {
-            return findGCD(small, big % small);
         }
+        return findGCD(small, big % small);
     }
 
     public int findLCM(int a, int b) {
@@ -194,7 +197,7 @@ public class OneToTen {
     }
 
     public boolean isPrime(int num) {
-        for (int i = 2; i < Math.sqrt(num) + 1; i++) {
+        for (int i = 2; i <= Math.sqrt(num); i++) {
             if (num % i == 0) {
                 return false;
             }
