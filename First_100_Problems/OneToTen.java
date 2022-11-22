@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Iterator;
+
 /*
  * Solves Problems 1 to 10 on Project Euler Archives.
  *
@@ -16,6 +19,8 @@
  * Each problem will have a designated method which solves it. These methods will all
  * be run in the main method.
  */
+
+
 
 public class OneToTen {
 
@@ -36,10 +41,11 @@ public class OneToTen {
         // Problem 6
         System.out.println("P6: " + solution.sumSquareDifference(1, 100));
         // Problem 7
-        System.out.println("P7: " + solution.nthPrime(5));
+        System.out.println("P7: " + solution.nthPrime(10001));
 
     }
 
+    //Problem 1
     public int sumOfMultiples3o5(int max) {
         int sum = 0;
         for (int i = 0; i < max; i++) {
@@ -50,6 +56,7 @@ public class OneToTen {
         return sum;
     }
 
+    //Problem 2
     public int sumOfEvenFibonacci(int max) {
         int sum = 0;
         int prev2 = 0;
@@ -62,6 +69,7 @@ public class OneToTen {
         return sum;
     }
 
+    //Problem 3
     public long findLargestPrimeFactor(long num) {
         int divisor = 2;
         boolean found = true;
@@ -100,6 +108,7 @@ public class OneToTen {
 
     }
 
+    //Problem 4
     public int findLargestPalindrome(int digits) {
         int maxNum = (int) Math.pow(10, digits) - 1;
         int minNum = (int) Math.pow(10, digits - 1);
@@ -115,6 +124,7 @@ public class OneToTen {
         return highest;
     }
 
+    //Problem 5
     public long minMaxLCM(int min, int max) {
         int lcm = 1;
         for (int i = min; i < max; i++) {
@@ -123,6 +133,7 @@ public class OneToTen {
         return lcm;
     }
 
+    //Problem 6
     public long sumSquareDifference(int min, int max) {
         long sqaureOfSum = 0;
         long sumOfSquares = 0;
@@ -134,9 +145,43 @@ public class OneToTen {
         return Math.abs(sqaureOfSum - sumOfSquares);
     }
 
-    public long nthPrime(int n) {
-        long prime = 0;
-        return prime;
+    //Problem 7
+    public long nthPrime(long n) {
+        //Initialize Arraylist of Integers
+        int numPrimes = 0;
+        long lastPrime = 0;
+        ArrayList<Long> numbers = new ArrayList<Long>();
+
+        //Find what the size of the list should be using the approximation from the prime number theorem
+        //Since it is an approximation, we multiply the result by 1.5
+        long numLimit = 10;
+        while(true){
+            if (numLimit/Math.log(numLimit) >= n){
+                break;
+            } else {
+                numLimit*=2;
+            }
+        }
+        for(long i = 2; i < numLimit*1.5; i++){
+            numbers.add(i);
+        }
+        //Use Sieve of Eratosthenes to remove numbers from the list
+        while(true){
+            Iterator<Long> numIter = numbers.iterator();
+            Long divisor = numbers.get(numPrimes);
+            while(numIter.hasNext()){
+                long temp = numIter.next();
+                if(temp % divisor == 0 && temp != divisor){
+                    numIter.remove();
+                }
+            }
+            numPrimes++;
+            //Check to see if we have reached the nth number
+            lastPrime = divisor;
+            if(numPrimes == n){
+                return lastPrime;
+            }
+        }
     }
 
     // Helper Methods
