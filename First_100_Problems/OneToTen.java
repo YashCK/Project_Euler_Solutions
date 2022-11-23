@@ -173,12 +173,11 @@ public class OneToTen {
     public long nthPrime(long n) {
         //Initialize Arraylist of Integers
         int numPrimes = 0;
-        long lastPrime = 0;
-        ArrayList<Long> numbers = new ArrayList<Long>();
+        int lastPrime = 0;
 
         //Find what the size of the list should be using the approximation from the prime number theorem
         //Since it is an approximation, we multiply the result by 1.5
-        long numLimit = 10;
+        int numLimit = 10;
         while(true){
             if (numLimit/Math.log(numLimit) >= n){
                 break;
@@ -186,26 +185,56 @@ public class OneToTen {
                 numLimit*=2;
             }
         }
-        for(long i = 2; i < numLimit*1.5; i++){
-            numbers.add(i);
+        //Initialize boolean of primes to true
+        boolean[] primes = new boolean[(int)(numLimit*1.5)];
+        for(int i = 0; i < primes.length; i++){
+            primes[i] = true;
         }
-        //Use Sieve of Eratosthenes to remove numbers from the list
+        //Use Sieve of Eratosthenes to find prime numbers
+        int num = 2;
         while(true){
-            Iterator<Long> numIter = numbers.iterator();
-            Long divisor = numbers.get(numPrimes);
-            while(numIter.hasNext()){
-                long temp = numIter.next();
-                if(temp % divisor == 0 && temp != divisor){
-                    numIter.remove();
+            if(num >= primes.length){
+                break;
+            } else if (primes[num]){
+                for(long i = ((long)num)*num; i < primes.length; i += num){
+                    primes[(int)i] = false;
                 }
-            }
-            numPrimes++;
-            //Check to see if we have reached the nth number
-            lastPrime = divisor;
-            if(numPrimes == n){
-                return lastPrime;
+                numPrimes++;
+                lastPrime = num;
+                num++;
+                //Check to see if we have reached the nth prime
+                if(numPrimes == n){
+                    return lastPrime;
+                }
+            } else {
+                num++;
             }
         }
+        return lastPrime;
+
+        //Method using an ArrayList
+
+        // ArrayList<Long> numbers = new ArrayList<Long>();
+        // for(long i = 2; i < numLimit*1.5; i++){
+        //     numbers.add(i);
+        // }
+        // //Use Sieve of Eratosthenes to remove numbers from the list
+        // while(true){
+        //     Iterator<Long> numIter = numbers.iterator();
+        //     Long divisor = numbers.get(numPrimes);
+        //     while(numIter.hasNext()){
+        //         long temp = numIter.next();
+        //         if(temp % divisor == 0 && temp != divisor){
+        //             numIter.remove();
+        //         }
+        //     }
+        //     numPrimes++;
+        //     //Check to see if we have reached the nth number
+        //     lastPrime = divisor;
+        //     if(numPrimes == n){
+        //         return lastPrime;
+        //     }
+        // }
     }
 
     //Problem 8
@@ -239,9 +268,9 @@ public class OneToTen {
 
     // Helper Methods
 
-    public int[][] findAllPythagoreanTriplets(int num){
-        return 0;
-    }
+    // public int[][] findAllPythagoreanTriplets(int num){
+    //     return 0;
+    // }
 
     public boolean isPalindrome(int num) {
         // int length = ("" + num).length();
