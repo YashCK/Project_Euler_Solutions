@@ -67,6 +67,9 @@ public class OneToTen {
         System.out.println("P8: " + solution.largestProductInSeries(stringNum, 13));
         //Problem 9
         System.out.println("P9: " + solution.findSpecialPythagoreanTriplet(1000));
+        //Problem 10
+        System.out.println("P10: " + solution.sumOfPrimes(10));
+        System.out.println("P10: " + solution.sumOfPrimes(2000000));
     }
 
     //Problem 1
@@ -264,6 +267,28 @@ public class OneToTen {
     //Problem 9
     public int findSpecialPythagoreanTriplet(int num){
         return 0;
+    }
+
+    //Problem 10
+    public long sumOfPrimes(int below){
+        long sum = 0;
+        //Initialize boolean of primes to true
+        boolean[] primes = new boolean[below];
+        for(int i = 0; i < primes.length; i++){
+            primes[i] = true;
+        }
+        //Use Sieve of Eratosthenes to find prime numbers and add to sum counter
+        int num = 2;
+        while(num < primes.length){
+            if (primes[num]){
+                for(long i = ((long)num)*num; i < primes.length; i += num){
+                    primes[(int)i] = false;
+                }
+                sum += num;
+            }
+            num++;
+        }
+        return sum;
     }
 
     // Helper Methods
