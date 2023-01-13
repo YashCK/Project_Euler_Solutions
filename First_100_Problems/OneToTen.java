@@ -66,9 +66,8 @@ public class OneToTen {
         "71636269561882670428252483600823257530420752963450";
         System.out.println("P8: " + solution.largestProductInSeries(stringNum, 13));
         //Problem 9
-        System.out.println("P9: " + solution.findSpecialPythagoreanTriplet(1000));
+        System.out.println("P9: " + solution.findSpecialPythagoreanTriplet(1000))   ;
         //Problem 10
-        System.out.println("P10: " + solution.sumOfPrimes(10));
         System.out.println("P10: " + solution.sumOfPrimes(2000000));
     }
 
@@ -98,40 +97,18 @@ public class OneToTen {
 
     //Problem 3
     public long findLargestPrimeFactor(long num) {
+        long original = num;
         int divisor = 2;
-        boolean found = true;
-        while (true) {
+        while (divisor <= Math.sqrt(original)) {
             if (num % divisor != 0) {
-                found = false;
-                for (int j = divisor; j < Math.sqrt(num); j++) {
-                    if (num % j == 0) {
-                        divisor = j;
-                        found = true;
-                        break;
-                    }
-                }
-            }
-            if (found) {
-                num /= divisor;
+                divisor++;
             } else {
-                return num;
+                if(num == divisor)
+                    return num;
+                num /= divisor;
             }
         }
-
-        /*
-         * This approach is the same method of prime factorization though it seems
-         * to take more operations/steps to finish. However the code written is much
-         * simpler than the code above.
-         */
-        // int divisor = 2;
-        // while (divisor < Math.sqrt(num)) {
-        // if (num % divisor != 0) {
-        // divisor++;
-        // } else {
-        // num /= divisor;
-        // }
-        // }
-        // return num;
+        return num;
 
     }
 
@@ -265,8 +242,26 @@ public class OneToTen {
     }
 
     //Problem 9
-    public int findSpecialPythagoreanTriplet(int num){
-        return 0;
+    public long findSpecialPythagoreanTriplet(int sum){
+        /*
+        c = sum - a - b
+        a^2 + b^2 = (sum - a - b)^2 = sum^2 + a^2 + b^2 - 2sum*a - 2sum*b + 2ab
+        0 = sum^2 - 2sum*a - 2sum*b + 2ab
+        sum^2/2 = (sum - a)(sum - b)
+        (sum^2/2)/sum ≤ factor < sum
+        */
+        int goal = (int)Math.pow(sum, 2)/2;
+        int lowerbound = goal/sum;
+        for(int i = lowerbound; i < sum; i++){
+            for(int j = sum - 1; j > lowerbound; j--){
+                if(i*j == goal){
+                    int a = sum - i;
+                    int b = sum - j;
+                    return a*b*(sum - a - b);
+                }
+            }
+        }
+        return -1;
     }
 
     //Problem 10
@@ -293,9 +288,17 @@ public class OneToTen {
 
     // Helper Methods
 
-    // public int[][] findAllPythagoreanTriplets(int num){
-    //     return 0;
-    // }
+    Integer[] primeFactorization(int num){
+        ArrayList<Integer> factors = new ArrayList<>();
+        int lpf = (int)findLargestPrimeFactor(num);
+        while(lpf != 1){
+            System.out.println("num: " + num + " lpf: " + lpf);
+            factors.add(lpf);
+            num = num/lpf;
+            lpf = (int)findLargestPrimeFactor(num);
+        }
+        return factors.toArray(new Integer[factors.size()]);
+    }
 
     public boolean isPalindrome(int num) {
         // int length = ("" + num).length();
@@ -353,7 +356,7 @@ public class OneToTen {
 
     }
 
-    public boolean isPrime(int num) {
+    public boolean isPrime(long num) {
         for (int i = 2; i <= Math.sqrt(num); i++) {
             if (num % i == 0) {
                 return false;
