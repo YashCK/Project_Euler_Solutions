@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /*
  * Solves Problems 1 to 10 on Project Euler Archives,
  *
@@ -47,9 +49,11 @@ public class ElevenToTwenty {
             {1, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52, 1, 89, 19, 67, 48}
         };
         System.out.println("P11: " + solution.largestProductInAGrid(grid));
-
+        //Problem 12
+        System.out.println("P12: " + solution.higlyDivisiblePrimeNumber(500));
     }
 
+    //Problem 11
     public long largestProductInAGrid(int[][] grid){
         long max = 0;
         for(int i = 0; i < grid.length; i++){
@@ -75,7 +79,73 @@ public class ElevenToTwenty {
         return max;
     }
 
+    //Problem 12
+    long higlyDivisiblePrimeNumber(int factors){
+        int num = 2;
+        long triangleNum = 1;
+        while(true){
+            if(numFactors(triangleNum) < factors){
+                triangleNum += num;
+                num++;
+            } else {
+                return triangleNum;
+            }
+        }
+    }
+
     //Helper functions
+
+    int numFactors(long num){
+        Integer[] primeFactors = primeFactorization(num);
+        int[] unique = new int[primeFactors.length];
+        int[] count = new int[unique.length];
+        int ind = -1;
+        int lastFactor = -1;
+        for(Integer i : primeFactors){
+            if(ind == -1 || i != lastFactor){
+                ind++;
+                unique[ind] = i;
+                lastFactor = i;
+                count[ind] = 1;
+            } else{
+                count[ind]++;
+            }
+        }
+        int c = 1;
+        for(int n : count){
+            if(n == 0)
+                break;
+            c *= n + 1;
+        }        
+        return c;
+    }
+
+    Integer[] primeFactorization(long num){
+        ArrayList<Integer> factors = new ArrayList<>();
+        int lpf = (int)findLargestPrimeFactor(num);
+        while(lpf != 1){
+            factors.add(lpf);
+            num = num/lpf;
+            lpf = (int)findLargestPrimeFactor(num);
+        }
+        return factors.toArray(new Integer[factors.size()]);
+    }
+
+    public long findLargestPrimeFactor(long num) {
+        long original = num;
+        int divisor = 2;
+        while (divisor <= Math.sqrt(original)) {
+            if (num % divisor != 0) {
+                divisor++;
+            } else {
+                if(num == divisor)
+                    return num;
+                num /= divisor;
+            }
+        }
+        return num;
+
+    }
 
     long prodInDirection(int[][] grid, int row, int col, int xdir, int ydir, int times){
         long product = 1;

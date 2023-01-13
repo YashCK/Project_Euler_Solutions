@@ -285,7 +285,6 @@ public class OneToTen {
         ArrayList<Integer> factors = new ArrayList<>();
         int lpf = (int)findLargestPrimeFactor(num);
         while(lpf != 1){
-            System.out.println("num: " + num + " lpf: " + lpf);
             factors.add(lpf);
             num = num/lpf;
             lpf = (int)findLargestPrimeFactor(num);
