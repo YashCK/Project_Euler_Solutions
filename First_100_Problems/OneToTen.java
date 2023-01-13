@@ -1,6 +1,6 @@
+package First_100_Problems;
+
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 
 /*
  * Solves Problems 1 to 10 on Project Euler Archives.
@@ -20,8 +20,6 @@ import java.util.Iterator;
  * Each problem will have a designated method which solves it. These methods will all
  * be run in the main method.
  */
-
-
 
 public class OneToTen {
 
@@ -154,16 +152,13 @@ public class OneToTen {
         //Initialize Arraylist of Integers
         int numPrimes = 0;
         int lastPrime = 0;
-
         //Find what the size of the list should be using the approximation from the prime number theorem
         //Since it is an approximation, we multiply the result by 1.5
         int numLimit = 10;
         while(true){
-            if (numLimit/Math.log(numLimit) >= n){
+            if (numLimit/Math.log(numLimit) >= n)
                 break;
-            } else {
-                numLimit*=2;
-            }
+            numLimit*=2;
         }
         //Initialize boolean of primes to true
         boolean[] primes = new boolean[(int)(numLimit*1.5)];
