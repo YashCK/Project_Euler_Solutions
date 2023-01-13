@@ -1,5 +1,3 @@
-package First_100_Problems;
-
 import java.util.ArrayList;
 
 /*

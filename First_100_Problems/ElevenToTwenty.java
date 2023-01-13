@@ -1,5 +1,3 @@
-package First_100_Problems;
-
 /*
  * Solves Problems 1 to 10 on Project Euler Archives,
  *
@@ -48,26 +46,45 @@ public class ElevenToTwenty {
             {20, 73, 35, 29, 78, 31, 90, 1, 74, 31, 49, 71, 48, 86, 81, 16, 23, 57, 5, 54},
             {1, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52, 1, 89, 19, 67, 48}
         };
-        System.out.println(solution.largestProductInAGrid(grid));
+        System.out.println("P11: " + solution.largestProductInAGrid(grid));
 
     }
 
     public long largestProductInAGrid(int[][] grid){
+        long max = 0;
         for(int i = 0; i < grid.length; i++){
-            for(int j = 0; j < grid.length; j++){
-                
+            for(int j = 0; j < grid[i].length; j++){
+                //Up
+                max = Math.max(max, prodInDirection(grid, i, j, 0, 1, 4));
+                //Down
+                max = Math.max(max, prodInDirection(grid, i, j, 0, -1, 4));
+                //Right
+                max = Math.max(max, prodInDirection(grid, i, j, 1, 0, 4));
+                //Left
+                max = Math.max(max, prodInDirection(grid, i, j, -1, 0, 4));
+                //Up Right
+                max = Math.max(max, prodInDirection(grid, i, j, 1, 1, 4));
+                //Up Left
+                max = Math.max(max, prodInDirection(grid, i, j, -1, 1, 4));
+                //Down Right
+                max = Math.max(max, prodInDirection(grid, i, j, 1, -1, 4));
+                //Down Left
+                max = Math.max(max, prodInDirection(grid, i, j, -1, -1, 4));
             }  
         }
+        return max;
     }
 
     //Helper functions
 
-    double prodInDirection(int[][] grid, int row, int col, int xdir, int ydir, int times){
-        double product = 1;
+    long prodInDirection(int[][] grid, int row, int col, int xdir, int ydir, int times){
+        long product = 1;
         for(int i = 0; i < times; i++){
             product *= grid[row][col];
             row += xdir;
             col += ydir;
+            if(row < 0 || row >= grid.length || col < 0 || col >= grid[0].length)
+                break;
         }
         return product;
     }
