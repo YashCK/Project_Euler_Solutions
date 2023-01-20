@@ -71,7 +71,64 @@ public class ElevenToTwenty {
         return sum.toString().substring(0, 10);
     }
 
+    //Problem 14
+    int longestCollatzSequence(int num){
+        // int[] memoryNums = new int[num];
+        int[] memoryLens = new int[num];
+        int maxLength = 1;
+        int maxNum = 1;
+        for(int i = 2; i < num; i++){
+            //Find Collatz Sequence Length
+            int length = 0;
+            long n = i;
+            while(n != 1){
+                n = (n % 2 == 0) ? n/2 : 3*n + 1;
+                length++;
+                //Use memoization
+                // if(n > 0 && n < num && memoryLens[(int)n] != 0){
+                //     length += memoryLens[(int)n];
+                //     break;
+                // }
+                if(n < num && memoryLens[(int)n] != 0){
+                    length += memoryLens[(int)n];
+                    break;
+                }
+            }
+            memoryLens[i] = length;
+            if(length > maxLength){
+                maxLength = length;
+                maxNum = i;
+            }
+        }
+        return maxNum;
+    }
+
     //Helper functions
+    int emptySpot(int[] array){
+        int index = 0;
+        for(int i : array){
+            if(i != 0)
+                index++;
+            else
+                return index;
+        }
+        return -1;
+    }
+
+    int search(int[] array, int element){
+        int low = 0;
+        int high = array.length - 1;
+        while(low <= high){
+            int mid = low + (high - low)/2;
+            if(array[mid] == element)
+                return mid;
+            if (array[mid] < element)
+                low = mid + 1;
+            else   
+                high = mid - 1;
+        }
+        return -1;
+    }
 
     int numFactors(long num){
         Integer[] primeFactors = primeFactorization(num);
@@ -272,6 +329,11 @@ public class ElevenToTwenty {
             "53503534226472524250874054075591789781264330331690"
         };
         System.out.println("P13: " + solution.largeSum(largeNums, 10));
+        //Problem 14
+        System.out.println("P14: " + solution.longestCollatzSequence(1000000));
+        //Problem 15
+        System.out.println("P15: " + solution.latticePaths(2));
+        System.out.println("P15: " + solution.latticePaths(20));
     }
 
 }
