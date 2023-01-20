@@ -68,7 +68,7 @@ public class ElevenToTwenty {
         for(String s : numbers){
             sum = sum.add(new BigInteger(s));
         }
-        return sum.toString().substring(0, 10);
+        return sum.toString().substring(0, digits);
     }
 
     //Problem 14
@@ -113,6 +113,12 @@ public class ElevenToTwenty {
             factorial = factorial.multiply(new BigInteger("" + i));
         }
         return product.divide(factorial);
+    }
+
+    //HW 16
+
+    int powerDigitSum(int base, int exp){
+        return 0;
     }
 
     //Helper functions
@@ -345,6 +351,9 @@ public class ElevenToTwenty {
         System.out.println("P14: " + solution.longestCollatzSequence(1000000));
         //Problem 15
         System.out.println("P15: " + solution.latticePaths(20));
+         //Problem 16
+         System.out.println("P16: " + solution.powerDigitSum(2, 15));
+         System.out.println("P16: " + solution.powerDigitSum(2, 1000));
     }
 
 }
