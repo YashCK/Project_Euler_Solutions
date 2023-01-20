@@ -85,10 +85,6 @@ public class ElevenToTwenty {
                 n = (n % 2 == 0) ? n/2 : 3*n + 1;
                 length++;
                 //Use memoization
-                // if(n > 0 && n < num && memoryLens[(int)n] != 0){
-                //     length += memoryLens[(int)n];
-                //     break;
-                // }
                 if(n < num && memoryLens[(int)n] != 0){
                     length += memoryLens[(int)n];
                     break;
@@ -101,6 +97,22 @@ public class ElevenToTwenty {
             }
         }
         return maxNum;
+    }
+
+    //Problem 15
+    BigInteger latticePaths(int gridSize){
+        //n choose k
+        //There are 2N choose N paths to traverse the lattice
+        BigInteger product = BigInteger.ONE;
+        int n = 2*gridSize;
+        for(int i = 0; i < gridSize; i++){
+            product = product.multiply(new BigInteger("" + (n - i)));
+        }
+        BigInteger factorial = BigInteger.ONE;
+        for(int i = 2; i <= gridSize; i++){
+            factorial = factorial.multiply(new BigInteger("" + i));
+        }
+        return product.divide(factorial);
     }
 
     //Helper functions
@@ -332,7 +344,6 @@ public class ElevenToTwenty {
         //Problem 14
         System.out.println("P14: " + solution.longestCollatzSequence(1000000));
         //Problem 15
-        System.out.println("P15: " + solution.latticePaths(2));
         System.out.println("P15: " + solution.latticePaths(20));
     }
 
