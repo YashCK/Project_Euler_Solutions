@@ -1,5 +1,6 @@
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /*
  * Solves Problems 1 to 10 on Project Euler Archives,
@@ -118,10 +119,36 @@ public class ElevenToTwenty {
     //HW 16
 
     int powerDigitSum(int base, int exp){
-        return 0;
+        int[] digits = bigNumber(base, exp);
+        return Arrays.stream(digits).sum();
     }
 
     //Helper functions
+    int[] bigNumber(int base, int exp){
+        //Number of digits of base^exp = 1 + exp(log10 base)
+        int numDigits = (int)(1 + exp*(Math.log10(base)));
+        int[] digits = new int[numDigits];
+        digits[0] = base;
+        int exponent = 1;
+        int highDigitIndex = 0;
+        while(exponent < exp){
+            exponent++;
+            for(int i = 0; i < highDigitIndex + 1; i++){
+                digits[i] *= 2;
+            }
+            for(int i = 0; i < highDigitIndex + 1; i++){
+                if(digits[i] >= 10){
+                    digits[i + 1] += 1;
+                    digits[i] -= 10;
+                    if(i == highDigitIndex){
+                        highDigitIndex += 1;
+                    }
+                }
+            }
+        }
+        return digits;
+    }
+
     int emptySpot(int[] array){
         int index = 0;
         for(int i : array){
@@ -352,8 +379,9 @@ public class ElevenToTwenty {
         //Problem 15
         System.out.println("P15: " + solution.latticePaths(20));
          //Problem 16
-         System.out.println("P16: " + solution.powerDigitSum(2, 15));
          System.out.println("P16: " + solution.powerDigitSum(2, 1000));
+         //Problem 17
+        //  System.out.println("P17: " + solution);
     }
 
 }
