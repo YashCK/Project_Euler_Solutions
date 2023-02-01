@@ -116,14 +116,53 @@ public class ElevenToTwenty {
         return product.divide(factorial);
     }
 
-    //HW 16
-
+    //Problem 16
     int powerDigitSum(int base, int exp){
         int[] digits = bigNumber(base, exp);
         return Arrays.stream(digits).sum();
     }
 
+    //Problem 17
+    int numberLetterCounts(int start, int end){
+        int count = 0;
+        for(int i = start; i <= end; i++){
+            count += stringRepresentation(i).length();
+        }
+        return count;
+    }
+
     //Helper functions
+    String stringRepresentation(int n){
+        //String representation of numbers
+        String[] lessThanTen = {"", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
+        String[] tenToTwenty = {"ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"};
+        String[] multsOfTen = {"", "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"};
+        String hundred = "hundred";
+        String thousand = "thousand";
+        String million = "million";
+        String billion = "billion";
+        //Return String representation of Input
+        if(n < 10){
+            return lessThanTen[n];
+        } else if(n > 10 && n <= 19){
+            return tenToTwenty[n - 10];
+        } else if(n < 100){
+            if(n % 10 == 0){
+                return multsOfTen[n/10];
+            }
+            return multsOfTen[n/10] + ((n % 10 != 0) ? lessThanTen[n % 10] : "");
+        } else if(n >= 100 && n < 1000){
+            return lessThanTen[n/100] + hundred + ((n % 100 != 0) ? "and" + stringRepresentation(n % 100) : "");
+        } else if(n >= 1000 && n < 1000000){
+            return stringRepresentation(n/1000) + thousand + ((n % 1000 != 0) ? stringRepresentation(n % 1000) : "");
+        } else if(n >= 1000000 && n < 1000000000){
+            return stringRepresentation(n/1000000) + million + ((n % 1000000 != 0) ? stringRepresentation(n % 1000000) : "");
+        } else if(n == 1000000000){
+            return billion;
+        }
+        return "";
+    }
+
     int[] bigNumber(int base, int exp){
         //Number of digits of base^exp = 1 + exp(log10 base)
         int numDigits = (int)(1 + exp*(Math.log10(base)));
@@ -381,7 +420,7 @@ public class ElevenToTwenty {
          //Problem 16
          System.out.println("P16: " + solution.powerDigitSum(2, 1000));
          //Problem 17
-        //  System.out.println("P17: " + solution);
+         System.out.println("P17: " + solution.numberLetterCounts(0, 1000));
     }
 
 }
