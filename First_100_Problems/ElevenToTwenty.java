@@ -131,6 +131,17 @@ public class ElevenToTwenty {
         return count;
     }
 
+    //Problem 18
+    int maximumPathSum(int[][] triangle){
+        for(int row = triangle.length - 2; row > -1; row--){
+            for(int pos = 0; pos < triangle[row].length; pos++){
+                //Add the greater of its two children
+                triangle[row][pos] += Math.max(triangle[row + 1][pos], triangle[row + 1][pos + 1]);
+            }
+        }
+        return triangle[0][0];
+    }
+
     //Helper functions
     String stringRepresentation(int n){
         //String representation of numbers
@@ -421,6 +432,25 @@ public class ElevenToTwenty {
          System.out.println("P16: " + solution.powerDigitSum(2, 1000));
          //Problem 17
          System.out.println("P17: " + solution.numberLetterCounts(0, 1000));
+         //Problem 18
+         int[][] triangle = {
+            {75},
+            {95, 64},
+            {17, 47, 82},
+            {18, 35, 87, 10},
+            {20, 4, 82, 47, 65},
+            {19, 1, 23, 75, 3, 34},
+            {88, 02, 77, 73, 7, 63, 67},
+            {99, 65, 4, 28, 6, 16, 70, 92},
+            {41, 41, 26, 56, 83, 40, 80, 70, 33},
+            {41, 48, 72, 33, 47, 32, 37, 16, 94, 29},
+            {53, 71, 44, 65, 25, 43, 91, 52, 97, 51, 14},
+            {70, 11, 33, 28, 77, 73, 17, 78, 39, 68, 17, 57},
+            {91, 71, 52, 38, 17, 14, 91, 43, 58, 50, 27, 29, 48},
+            {63, 66, 4, 68, 89, 53, 67, 30, 73, 16, 69, 87, 40, 31},
+            {4, 62, 98, 27, 23, 9, 70, 98, 73, 93, 38, 53, 60, 4, 23}
+         };
+         System.out.println("P18: " + solution.maximumPathSum(triangle));
     }
 
 }
