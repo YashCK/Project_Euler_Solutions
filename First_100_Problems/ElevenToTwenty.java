@@ -142,6 +142,35 @@ public class ElevenToTwenty {
         return triangle[0][0];
     }
 
+    //Problem 19
+    int countingSundays(int day, int month, int year){
+        //1 Jan 1900 was a Monday
+        int weekday = 0;
+        //Counter for number of sundays
+        int count = 1;
+        //Iterate through the months of every following year
+        for(int y = 1901; y <= year; y++){
+            int feb_days = (y % 4 == 0) ? 29 : 28;
+            for(int m = 1; m <= 12; m++){
+                switch(m) {
+                    case 1, 3, 5, 7, 8, 10, 12:
+                        weekday += 31;
+                        break;
+                    case 2:
+                        weekday += feb_days;
+                        break;
+                    default:
+                        weekday += 30;
+                }
+                weekday %= 7;
+                if (weekday == 0) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
     //Helper functions
     String stringRepresentation(int n){
         //String representation of numbers
@@ -451,6 +480,8 @@ public class ElevenToTwenty {
             {4, 62, 98, 27, 23, 9, 70, 98, 73, 93, 38, 53, 60, 4, 23}
          };
          System.out.println("P18: " + solution.maximumPathSum(triangle));
+         //Problem 19
+         System.out.println("P19: " + solution.countingSundays(31, 12, 2000));
     }
 
 }
