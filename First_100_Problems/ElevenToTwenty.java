@@ -171,6 +171,20 @@ public class ElevenToTwenty {
         return count;
     }
 
+    //Problem 20
+    int factorialDigitSum(int factorial){
+        BigInteger num = BigInteger.ONE;
+        for (int i = 2; i <= factorial; i++){
+            num = num.multiply(new BigInteger(i + ""));
+        }
+        String number = num.toString();
+        int total = 0;
+        for(int i = 0; i < number.length(); i++){
+            total += Integer.parseInt(number.charAt(i) + "");
+        }
+        return total;
+    }
+
     //Helper functions
     String stringRepresentation(int n){
         //String representation of numbers
@@ -482,6 +496,8 @@ public class ElevenToTwenty {
          System.out.println("P18: " + solution.maximumPathSum(triangle));
          //Problem 19
          System.out.println("P19: " + solution.countingSundays(31, 12, 2000));
+         //Problem 20
+         System.out.println("P20: " + solution.factorialDigitSum(100));
     }
 
 }
