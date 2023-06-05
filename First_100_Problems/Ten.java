@@ -19,7 +19,7 @@ import java.util.ArrayList;
  * be run in the main method.
  */
 
-public class OneToTen {
+public class Ten {
 
     //Problem 1
     public int sumOfMultiples3o5(int max) {
@@ -314,7 +314,7 @@ public class OneToTen {
     //Main Method
     public static void main(String[] args) {
 
-        OneToTen solution = new OneToTen();
+        Ten solution = new Ten();
 
         // Problem 1
         System.out.println("P1: " + solution.sumOfMultiples3o5(1000));

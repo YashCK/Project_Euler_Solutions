@@ -21,7 +21,7 @@ import java.util.Arrays;
  * be run in the main method,
  */
 
-public class ElevenToTwenty {
+public class Twenty {
 
     //Problem 11
     public long largestProductInAGrid(int[][] grid){
@@ -335,7 +335,7 @@ public class ElevenToTwenty {
     //Main Method
     public static void main(String[] args) {
         
-        ElevenToTwenty solution = new ElevenToTwenty();
+        Twenty solution = new Twenty();
 
         //Problem 11
         int[][] grid = {
